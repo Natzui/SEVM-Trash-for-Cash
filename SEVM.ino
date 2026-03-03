@@ -34,22 +34,27 @@ void loop() {
 
   bool irState = digitalRead(irPin);
 
-  // detect object
-  if (irState == LOW && lastState == HIGH) {
+  // ✅ BUZZER: ON when IR detects, OFF when no detect
+  if (irState == LOW) {
+    tone(buzzerPin, 3000);   // loud continuous sound
+  } else {
+    noTone(buzzerPin);       // stop sound
+  }
 
-    tone(buzzerPin, 1000, 200); // beep
+  // ✅ COUNT ONLY ON NEW DETECTION
+  if (irState == LOW && lastState == HIGH) {
 
     number++;
     if (number > 9) number = 1;
 
     showNumber(number);
 
-    // ⭐ SERVO SPIN RIGHT FOR 1.5 SECONDS
+    // ✅ SERVO SPIN LEFT WHEN COUNT = 9
     if (number == 9) {
 
-      myServo.write(100);   // RIGHT spin
-      delay(1500);          // 1.5 seconds
-      myServo.write(90);    // STOP
+      myServo.write(50);    // LEFT spin (fast)
+      delay(1000);         // spin for 1 second
+      myServo.write(90);   // STOP
     }
 
     delay(300); // anti double detect
@@ -68,29 +73,29 @@ void showNumber(int n) {
 
   switch 👎 {
 
-    case 1: digitalWrite(b,HIGH); digitalWrite(c,HIGH); break;
+    case 1: digitalWrite(g,HIGH); digitalWrite(e,HIGH); break;
 
-    case 2: digitalWrite(a,HIGH); digitalWrite(b,HIGH);
+    case 2: digitalWrite(f,HIGH); digitalWrite(g,HIGH);
+            digitalWrite(b,HIGH); digitalWrite(c,HIGH);
+            digitalWrite(d,HIGH); break;
+
+    case 3: digitalWrite(f,HIGH); digitalWrite(b,HIGH);
             digitalWrite(g,HIGH); digitalWrite(e,HIGH);
             digitalWrite(d,HIGH); break;
 
-    case 3: digitalWrite(a,HIGH); digitalWrite(b,HIGH);
-            digitalWrite(g,HIGH); digitalWrite(c,HIGH);
-            digitalWrite(d,HIGH); break;
-
-    case 4: digitalWrite(f,HIGH); digitalWrite(g,HIGH);
-            digitalWrite(b,HIGH); digitalWrite(c,HIGH); break;
+    case 4: digitalWrite(a,HIGH); digitalWrite(g,HIGH);
+            digitalWrite(b,HIGH); digitalWrite(e,HIGH); break;
 
     case 5: digitalWrite(a,HIGH); digitalWrite(f,HIGH);
-            digitalWrite(g,HIGH); digitalWrite(c,HIGH);
+            digitalWrite(e,HIGH); digitalWrite(b,HIGH);
             digitalWrite(d,HIGH); break;
 
     case 6: digitalWrite(a,HIGH); digitalWrite(f,HIGH);
-            digitalWrite(g,HIGH); digitalWrite(e,HIGH);
+            digitalWrite(b,HIGH); digitalWrite(e,HIGH);
             digitalWrite(d,HIGH); digitalWrite(c,HIGH); break;
 
-    case 7: digitalWrite(a,HIGH); digitalWrite(b,HIGH);
-            digitalWrite(c,HIGH); break;
+    case 7: digitalWrite(f,HIGH); digitalWrite(g,HIGH);
+            digitalWrite(e,HIGH); break;
 
     case 8: digitalWrite(a,HIGH); digitalWrite(b,HIGH);
             digitalWrite(c,HIGH); digitalWrite(d,HIGH);
@@ -98,7 +103,7 @@ void showNumber(int n) {
             digitalWrite(g,HIGH); break;
 
     case 9: digitalWrite(a,HIGH); digitalWrite(b,HIGH);
-            digitalWrite(c,HIGH); digitalWrite(d,HIGH);
+            digitalWrite(e,HIGH); digitalWrite(d,HIGH);
             digitalWrite(f,HIGH); digitalWrite(g,HIGH); break;
   }
 }
