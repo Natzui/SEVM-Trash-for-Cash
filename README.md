@@ -60,4 +60,35 @@ The entire process is automatic and requires no manual supervision.
 
 ---
 
-## 🔌 Basic System Flow
+
+## 🛠️ Technologies Used
+
+- Embedded Systems
+- Arduino Programming (C/C++)
+- Sensor-Based Automation
+- Basic IoT Concepts
+
+---
+
+## 🚀 Future Improvements
+
+- Add weight sensor to prevent system abuse.
+- Integrate Wi-Fi or GSM module for remote monitoring.
+- Add LCD display for user instructions.
+- Implement data logging for waste tracking.
+- Develop mobile app integration.
+
+---
+
+## 🌱 Impact
+
+SEVM combines technology and behavioral reinforcement to address littering. By rewarding proper waste disposal, the system encourages responsible habits in schools and communities.
+
+This project demonstrates how simple IoT-based solutions can create practical environmental impact.
+
+---
+
+## 📄 License
+
+This project is intended for academic and educational purposes.  
+Feel free to modify and expand the system based on your requirements.
