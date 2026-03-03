@@ -13,6 +13,10 @@ Servo myServo;
 int number = 1;
 bool lastState = HIGH;
 
+// ⭐ ADDED (IR delay timer)
+unsigned long lastDetectTime = 0;
+const unsigned long detectDelay = 1000; // 1 second delay
+
 // --------------------------------
 void setup() {
 
@@ -36,13 +40,16 @@ void loop() {
 
   // ✅ BUZZER: ON when IR detects, OFF when no detect
   if (irState == LOW) {
-    tone(buzzerPin, 3000);   // loud continuous sound
+    tone(buzzerPin, 5000);
   } else {
-    noTone(buzzerPin);       // stop sound
+    noTone(buzzerPin);
   }
 
-  // ✅ COUNT ONLY ON NEW DETECTION
-  if (irState == LOW && lastState == HIGH) {
+  // ✅ COUNT ONLY ON NEW DETECTION + 1 SECOND DELAY ⭐
+  if (irState == LOW && lastState == HIGH &&
+      millis() - lastDetectTime >= detectDelay) {
+
+    lastDetectTime = millis();   // ⭐ reset timer
 
     number++;
     if (number > 9) number = 1;
@@ -52,9 +59,9 @@ void loop() {
     // ✅ SERVO SPIN LEFT WHEN COUNT = 9
     if (number == 9) {
 
-      myServo.write(50);    // LEFT spin (fast)
-      delay(1000);         // spin for 1 second
-      myServo.write(90);   // STOP
+      myServo.write(50);
+      delay(1000);
+      myServo.write(90);
     }
 
     delay(300); // anti double detect
